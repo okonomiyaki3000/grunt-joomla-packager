@@ -37,46 +37,88 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.name
+**Required**
 Type: `String`
-Default value: `',  '`
+Default value: `null`
 
-A string value that is used to do something with whatever.
+The base name of the extension to be packaged. Omit any obligatory prefix. For example, to package a component called `com_mycompoment`, just use `mycomponent`.  
 
-#### options.punctuation
+#### options.type
+**Required**
+Type: `String`
+Default value: `null`
+
+The extension type. Should be one of: `component`, `file`, `language`, `library`, `module`, `plugin`, or `template`. The `package` type extension is not currently supported. 
+
+#### options.group
+**Required if type is `plugin`**
+Type: `String`
+Default value: `null`
+
+The plugin group. Joomla's built-in groups are `authentication`, `captcha`, `content`, `editors`, `editors-xtd`, `extension`, `finder`, `quickicon`, `search`, `system`, `twofactorauth`, and `user` but this list is also extensible. 
+
+#### options.joomla
 Type: `String`
 Default value: `'.'`
 
-A string value that is used to do something else with whatever else.
+The path to your Joomla installation's root directory. Files will be copied from locations inside this directory (in most cases). 
+
+#### options.dest
+Type: `String`
+Default value: `'./dest'`
+
+The location where files should be copied to. A directory will be created in this location for each and every extension being packed. If you are packaging a component called `mycomponent`, a folder `com_mycomponent` will be created here and files will be copied into it.
+
+#### options.administrator
+Type: `String`
+Default value: `options.joomla + '/administrator'`
+
+The location of the Joomla _administrator_ directory. No need to change this unless using a custom `defines.php` file.
+
+#### options.libraries
+Type: `String`
+Default value: `options.joomla + '/libraries'`
+
+The location of the _libraries_ directory. No need to change this unless using a custom `defines.php` file.
+
+#### options.plugins
+Type: `String`
+Default value: `options.joomla + '/plugins'`
+
+The location of the _plugins_ directory. No need to change this unless using a custom `defines.php` file.
+
+#### options.templates
+Type: `String`
+Default value: `options.joomla + '/templates'`
+
+The location of the _templates_ directory. No need to change this unless using a custom `defines.php` file.
+
+#### options.manifests
+Type: `String`
+Default value: `options.administrator + '/manifests'`
+
+The location of the _manifests_ directory. No need to change this unless using a custom `defines.php` file.
+
+#### options.adminTemplates
+Type: `String`
+Default value: `options.administrator + '/templates'`
+
+The location of the administrator _templates_ directory. No need to change this unless using a custom `defines.php` file in the administrator app.
 
 ### Usage Examples
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+#### Component Packaging
+In this example, `com_custom` is being copied from a Joomla directory and packaged.
 
 ```js
 grunt.initConfig({
   joomla_packager: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  joomla_packager: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
+    com_custom: {
+      'name': 'custom',
+      'type': 'component',
+      'joomla': '/path/to/joomla',
+      'dest': '/path/to/packages'
     },
   },
 });
@@ -86,4 +128,4 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+* 2015-09-28   v0.1.0b1   First beta. Probably works...
