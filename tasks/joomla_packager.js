@@ -94,12 +94,12 @@ function getOptions(opt)
         administrator: options.joomla + '/administrator',
         libraries: options.joomla + '/libraries',
         plugins: options.joomla + '/plugins',
-        templates: options.joomla + '/templates',
-        manifests: options.joomla + '/manifests'
+        templates: options.joomla + '/templates'
     }));
 
     // And one more that depends on options.administrator
     return opt(merge(options, {
+        manifests: options.administrator + '/manifests',
         adminTemplates: options.administrator + '/templates'
     }));
 }

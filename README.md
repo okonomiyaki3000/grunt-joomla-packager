@@ -49,20 +49,20 @@ The base name of the extension to be packaged. Omit any obligatory prefix. For e
 Type: `String`
 Default value: `null`
 
-The extension type. Should be one of: `component`, `file`, `language`, `library`, `module`, `plugin`, or `template`. The `package` type extension is not currently supported. 
+The extension type. Should be one of: `component`, `file`, `language`, `library`, `module`, `plugin`, or `template`. The `package` type extension is not currently supported.
 
 #### options.group
 **Required if type is `plugin`**
 Type: `String`
 Default value: `null`
 
-The plugin group. Joomla's built-in groups are `authentication`, `captcha`, `content`, `editors`, `editors-xtd`, `extension`, `finder`, `quickicon`, `search`, `system`, `twofactorauth`, and `user` but this list is also extensible. 
+The plugin group. Joomla's built-in groups are `authentication`, `captcha`, `content`, `editors`, `editors-xtd`, `extension`, `finder`, `quickicon`, `search`, `system`, `twofactorauth`, and `user` but this list is also extensible.
 
 #### options.joomla
 Type: `String`
 Default value: `'.'`
 
-The path to your Joomla installation's root directory. Files will be copied from locations inside this directory (in most cases). 
+The path to your Joomla installation's root directory. Files will be copied from locations inside this directory (in most cases).
 
 #### options.dest
 Type: `String`
@@ -128,4 +128,5 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+* 2015-09-29   v0.1.0b2   Bugfix: default manifest path was wrong.
 * 2015-09-28   v0.1.0b1   First beta. Probably works...
