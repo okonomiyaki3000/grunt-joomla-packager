@@ -1,7 +1,7 @@
 {
   "name": "grunt-joomla-packager",
   "description": "Tasks for copying extension files from a Joomla installation and repackaging them as an installable package.",
-  "version": "0.1.0b2",
+  "version": "0.1.0b3",
   "homepage": "https://github.com/okonomiyaki3000/grunt-joomla-packager",
   "author": {
     "name": "Elijah Madden",

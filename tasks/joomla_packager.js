@@ -85,7 +85,8 @@ function getOptions(opt)
     // Merge task-specific and/or target-specific options with these defaults.
     var options = opt({
             joomla: '.',
-            dest: './dest'
+            dest: './dest',
+            client: 'site'
         }),
         manifest;
 
@@ -151,16 +152,16 @@ function getExtensionPath(options)
             return options.administrator + '/components/com_' + options.name;
 
         case 'module':
-            return (options.group === 'admin' ? options.administrator : options.joomla) + '/modules/mod_' + options.name;
+            return (options.client === 'administrator' ? options.administrator : options.joomla) + '/modules/mod_' + options.name;
 
         case 'plugin':
             return options.plugins + '/' + options.group + '/' + options.name;
 
         case 'template':
-            return (options.group === 'admin' ? options.adminTemplates : options.templates) + '/' + options.name;
+            return (options.client === 'administrator' ? options.adminTemplates : options.templates) + '/' + options.name;
 
         case 'language':
-            return (options.group === 'admin' ? options.administrator : options.joomla) + '/language/' + options.name;
+            return (options.client === 'administrator' ? options.administrator : options.joomla) + '/language/' + options.name;
 
         case 'file':
             return options.manifests + '/files';
@@ -254,16 +255,16 @@ function getFilesPath(options, admin)
             return (admin ? options.administrator : options.joomla) + '/components/com_' + options.name;
 
         case 'module':
-            return (admin || options.group === 'admin' ? options.administrator : options.joomla) + '/modules/mod_' + options.name;
+            return (admin || options.client === 'administrator' ? options.administrator : options.joomla) + '/modules/mod_' + options.name;
 
         case 'plugin':
             return options.plugins + '/' + options.group + '/' + options.name;
 
         case 'template':
-            return (admin || options.group === 'admin' ? options.adminTemplates : options.templates) + '/' + options.name;
+            return (admin || options.client === 'administrator' ? options.adminTemplates : options.templates) + '/' + options.name;
 
         case 'language':
-            return (admin || options.group === 'admin' ? options.administrator : options.joomla) + '/language/';
+            return (admin || options.client === 'administrator' ? options.administrator : options.joomla) + '/language/';
 
         case 'file':
             return options.joomla;

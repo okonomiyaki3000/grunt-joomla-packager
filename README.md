@@ -58,6 +58,12 @@ Default value: `null`
 
 The plugin group. Joomla's built-in groups are `authentication`, `captcha`, `content`, `editors`, `editors-xtd`, `extension`, `finder`, `quickicon`, `search`, `system`, `twofactorauth`, and `user` but this list is also extensible.
 
+#### options.client
+Type: `String`
+Default value: `site`
+
+The client application in which the extension is installed. Can be either `site` or `administrator`. Only applies to the `language`, `module`, and `template` types. 
+
 #### options.joomla
 Type: `String`
 Default value: `'.'`
