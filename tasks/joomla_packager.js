@@ -57,7 +57,7 @@ module.exports = function(grunt) {
             mapping.forEach(function (file) {
                 if (grunt.file.exists(file.src))
                 {
-                    grunt.verbose.log('Copying file: ' + file.src);
+                    grunt.verbose('Copying file: ' + file.src);
                     fs.copySync(file.src, options.dest + file.dest);
                 }
                 else
