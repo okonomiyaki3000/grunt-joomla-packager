@@ -49,7 +49,7 @@ The base name of the extension to be packaged. Omit any obligatory prefix. For e
 Type: `String`
 Default value: `null`
 
-The extension type. Should be one of: `component`, `file`, `language`, `library`, `module`, `plugin`, or `template`. The `package` type extension is not currently supported.
+The extension type. Should be one of: `component`, `files`, `language`, `library`, `module`, `plugin`, or `template`. The `package` type extension is not currently supported.
 
 #### options.group
 **Required if type is `plugin`**
@@ -62,7 +62,7 @@ The plugin group. Joomla's built-in groups are `authentication`, `captcha`, `con
 Type: `String`
 Default value: `site`
 
-The client application in which the extension is installed. Can be either `site` or `administrator`. Only applies to the `language`, `module`, and `template` types. 
+The client application in which the extension is installed. Can be either `site` or `administrator`. Only applies to the `language`, `module`, and `template` types.
 
 #### options.joomla
 Type: `String`

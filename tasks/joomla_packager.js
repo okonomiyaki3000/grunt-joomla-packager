@@ -117,7 +117,7 @@ function getPackageName(options)
     {
         case 'component': prefix = 'com_'; break;
         case 'plugin':    prefix = 'plg_'; break;
-        case 'file':      prefix = 'file_'; break;
+        case 'files':     prefix = 'files_'; break;
         case 'library':   prefix = 'lib_'; break;
         case 'package':   prefix = 'pkg_'; break;
         case 'module':    prefix = 'mod_'; break;
@@ -142,7 +142,7 @@ function getManifestFilename(type, name)
     {
         case 'component':
         case 'plugin':
-        case 'file':
+        case 'files':
         case 'library':
         case 'package':
             return name + '.xml';
@@ -186,7 +186,7 @@ function getExtensionPath(options)
         case 'language':
             return (options.client === 'administrator' ? options.administrator : options.joomla) + '/language/' + options.name;
 
-        case 'file':
+        case 'files':
             return options.manifests + '/files';
 
         case 'library':
@@ -259,6 +259,19 @@ function getMapping(extension, options)
         });
     }
 
+    if (extension.fileset)
+    {
+        extension.fileset.forEach(function (fileset) {
+            if (fileset.files)
+            {
+                thisObj.path = getFilesPath(options, true);
+                fileset.files.map(processFiles, thisObj).forEach(function (list) {
+                    [].push.apply(mapping, list);
+                });
+            }
+        });
+    }
+
     return mapping;
 }
 
@@ -289,7 +302,7 @@ function getFilesPath(options, admin)
         case 'language':
             return (admin || options.client === 'administrator' ? options.administrator : options.joomla) + '/language/';
 
-        case 'file':
+        case 'files':
             return options.joomla;
 
         case 'library':
