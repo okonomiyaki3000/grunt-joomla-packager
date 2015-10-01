@@ -22,6 +22,7 @@ module.exports = function(grunt) {
     grunt.registerMultiTask('joomla_packager', 'Tasks for copying extension files from a Joomla installation and repackaging them as an installable package.', function() {
         var done = this.async(),
             options = getOptions(this.options),
+            packageName = getPackageName(this.options),
             manifestFile, extensionPath, manifestXML;
 
         try
@@ -58,7 +59,7 @@ module.exports = function(grunt) {
                 if (grunt.file.exists(file.src))
                 {
                     grunt.verbose.write('Copying file: ' + file.src);
-                    fs.copySync(file.src, options.dest + file.dest);
+                    fs.copySync(file.src, options.dest + '/' + packageName + file.dest);
                 }
                 else
                 {
@@ -103,6 +104,27 @@ function getOptions(opt)
         manifests: options.administrator + '/manifests',
         adminTemplates: options.administrator + '/templates'
     }));
+}
+
+function getPackageName(options)
+{
+    var prefix = '',
+        group = (options.type === 'plugin' && options.group) ? options.group + '_' : '',
+        name = options.name;
+
+    switch (options.type)
+    {
+        case 'component': prefix = 'com_'; break;
+        case 'plugin':    prefix = 'plg_'; break;
+        case 'file':      prefix = 'file_'; break;
+        case 'library':   prefix = 'lib_'; break;
+        case 'package':   prefix = 'pkg_'; break;
+        case 'module':    prefix = 'mod_'; break;
+        case 'template':  prefix = 'tpl_'; break;
+        case 'language':  prefix = 'lan_'; break;
+    }
+
+    return prefix + group + name;
 }
 
 /**
