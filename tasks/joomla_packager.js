@@ -22,7 +22,7 @@ module.exports = function(grunt) {
     grunt.registerMultiTask('joomla_packager', 'Tasks for copying extension files from a Joomla installation and repackaging them as an installable package.', function() {
         var done = this.async(),
             options = getOptions(this.options),
-            packageName = getPackageName(this.options),
+            packageName = getPackageName(options),
             manifestFile, extensionPath, manifestXML;
 
         try
@@ -58,7 +58,8 @@ module.exports = function(grunt) {
             mapping.forEach(function (file) {
                 if (grunt.file.exists(file.src))
                 {
-                    grunt.verbose.write('Copying file: ' + file.src);
+                    grunt.verbose.writeln('Copying file: ' + file.src);
+                    grunt.verbose.writeln('\tto: ' + options.dest + '/' + packageName + file.dest);
                     fs.copySync(file.src, options.dest + '/' + packageName + file.dest);
                 }
                 else
