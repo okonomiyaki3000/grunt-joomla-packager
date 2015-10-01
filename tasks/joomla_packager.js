@@ -57,7 +57,7 @@ module.exports = function(grunt) {
             mapping.forEach(function (file) {
                 if (grunt.file.exists(file.src))
                 {
-                    grunt.verbose('Copying file: ' + file.src);
+                    grunt.verbose.write('Copying file: ' + file.src);
                     fs.copySync(file.src, options.dest + file.dest);
                 }
                 else
@@ -394,8 +394,6 @@ function processLanguages(languages)
  */
 function processMedia(media)
 {
-    console.log('processMedia');
-    console.dir(media);
     /* jslint validthis: true */
     var mappings = [],
         basePath = this.path,
