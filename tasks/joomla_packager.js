@@ -15,14 +15,13 @@ var merge = require('merge'),
 
 
 module.exports = function(grunt) {
-
     // Please see the Grunt documentation for more information regarding task
     // creation: http://gruntjs.com/creating-tasks
 
     grunt.registerMultiTask('joomla_packager', 'Tasks for copying extension files from a Joomla installation and repackaging them as an installable package.', function() {
         var done = this.async(),
             options = getOptions(this.options),
-            packageName = getPackageName(options),
+            gruntOptions = this.options,
             manifestFile, extensionPath, manifestXML;
 
         try
@@ -46,6 +45,15 @@ module.exports = function(grunt) {
             {
                 grunt.fatal('Malformed XML: <extension> missing');
             }
+
+            // If the manifest file has a name, make it the default name.
+            // Can be overriden by options.
+            if (!!result.extension.name)
+            {
+                options = gruntOptions(merge(options, { packageName: result.extension.name[0] }));
+            }
+
+            var packageName = getPackageName(options);
 
             var mapping = getMapping(result.extension, options);
 
@@ -88,7 +96,17 @@ function getOptions(opt)
     var options = opt({
             joomla: '.',
             dest: './dest',
-            client: 'site'
+            client: 'site',
+            packagePrefix: {
+                'component': 'com',
+                'plugin':    'plg',
+                'files':     'files',
+                'library':   'lib',
+                'package':   'pkg',
+                'module':    'mod',
+                'template':  'tpl',
+                'language':  'lan'
+            }
         }),
         manifest;
 
@@ -107,23 +125,23 @@ function getOptions(opt)
     }));
 }
 
+/**
+ * Get a name for the package directory.
+ *
+ * @param   {Object}  options  Options object.
+ *
+ * @return  {String}
+ */
 function getPackageName(options)
 {
-    var prefix = '',
+    if (options.packageName)
+    {
+        return options.packageName;
+    }
+
+    var prefix = !!options.packagePrefix[options.type] ? options.packagePrefix[options.type] + '_' : '',
         group = (options.type === 'plugin' && options.group) ? options.group + '_' : '',
         name = options.name;
-
-    switch (options.type)
-    {
-        case 'component': prefix = 'com_'; break;
-        case 'plugin':    prefix = 'plg_'; break;
-        case 'files':     prefix = 'files_'; break;
-        case 'library':   prefix = 'lib_'; break;
-        case 'package':   prefix = 'pkg_'; break;
-        case 'module':    prefix = 'mod_'; break;
-        case 'template':  prefix = 'tpl_'; break;
-        case 'language':  prefix = 'lan_'; break;
-    }
 
     return prefix + group + name;
 }
@@ -213,6 +231,11 @@ function getMapping(extension, options)
         thisObj = {
             options: options
         };
+
+    if (options.type === 'library')
+    {
+        options.libraryname = extension.libraryname ? extension.libraryname[0] : options.name;
+    }
 
     if (extension.files)
     {
@@ -306,7 +329,7 @@ function getFilesPath(options, admin)
             return options.joomla;
 
         case 'library':
-            return options.libraries;
+            return options.libraries + '/' + options.libraryname;
 
         case 'package':
             return '';
