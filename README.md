@@ -60,9 +60,33 @@ The plugin group. Joomla's built-in groups are `authentication`, `captcha`, `con
 
 #### options.client
 Type: `String`
-Default value: `site`
+Default value: `'site'`
 
 The client application in which the extension is installed. Can be either `site` or `administrator`. Only applies to the `language`, `module`, and `template` types.
+
+#### options.packageName
+Type: `String`
+Default value: `null`
+
+The name of a directory that will be created (inside of `options.dest`) for this package. There's really no need to set this as the value will either be take from the `name` value in the manifest file or generated based on the type, group (plugins only), and name options.
+
+#### options.packagePrefix
+type: `Object`
+default value:
+```js
+{
+    'component': 'com',
+    'plugin':    'plg',
+    'files':     'files',
+    'library':   'lib',
+    'package':   'pkg',
+    'module':    'mod',
+    'template':  'tpl',
+    'language':  'lan'
+}
+```
+
+This is a mapping of extension type to naming prefix. This prefix will only be used in cases when the name of the package directory needs to be generated. This should be a rare case.
 
 #### options.joomla
 Type: `String`
@@ -115,18 +139,48 @@ The location of the administrator _templates_ directory. No need to change this 
 ### Usage Examples
 
 #### Component Packaging
-In this example, `com_custom` is being copied from a Joomla directory and packaged.
+In this example, `com_content` is being copied from a Joomla directory and packaged.
 
 ```js
 grunt.initConfig({
   joomla_packager: {
-    com_custom: {
-      'name': 'custom',
-      'type': 'component',
+    com_content: {
+        options: {
+          'name': 'content',
+          'type': 'component',
+          'joomla': '/path/to/joomla',
+          'dest': '/path/to/packages'            
+        }
+    }
+  }
+});
+```
+
+> __Fun Fact:__ This configuration actually fails because the manifest file for this component has a mistake in it. You can make it work by using `--force`.
+
+#### Global Options
+It's highly likely that you'll be copying from the same joomla directory and to the same destination for more than one package. Then you can do this:
+
+```js
+grunt.initConfig({
+  joomla_packager: {
+    options: {
       'joomla': '/path/to/joomla',
       'dest': '/path/to/packages'
     },
-  },
+    com_content: {
+        options: {
+          'name': 'content',
+          'type': 'component'
+        }
+    },
+    com_categories: {
+        options: {
+          'name': 'categories',
+          'type': 'component'
+        }
+    }
+  }
 });
 ```
 
@@ -134,5 +188,11 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+* 2015-10-01   v0.1.0b8   Better package naming. Properly locate libraries based on the library name in the manifest file.
+* 2015-10-01   v0.1.0b7   Bugfix: various fixes for the 'files' extension type.
+* 2015-10-01   v0.1.0b6   Bugfix: create directories for each package.
+* 2015-10-01   v0.1.0b5   Bugfix: more logging problems.
+* 2015-10-01   v0.1.0b4   Bugfix: logging problems.
+* 2015-09-30   v0.1.0b3   Add a 'client' option (instead of repurposing 'group').
 * 2015-09-29   v0.1.0b2   Bugfix: default manifest path was wrong.
 * 2015-09-28   v0.1.0b1   First beta. Probably works...
