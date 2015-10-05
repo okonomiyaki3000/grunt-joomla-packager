@@ -190,6 +190,7 @@ grunt.initConfig({
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+* 2015-10-05   v0.1.0b10    Minor changes to readme and package.json.
 * 2015-10-05   v0.1.0b9   Accept any tag name inside of `<files>` and `<media>`.
 * 2015-10-01   v0.1.0b8   Better package naming. Properly locate libraries based on the library name in the manifest file.
 * 2015-10-01   v0.1.0b7   Bugfix: various fixes for the 'files' extension type.
