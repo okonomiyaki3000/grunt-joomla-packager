@@ -353,15 +353,12 @@ function processFiles(files)
         basePath = this.path,
         dest = (files && files.$ && files.$.folder) ? '/' + files.$.folder : '';
 
-    if (files.filename)
-    {
-        [].push.apply(mappings, files.filename.map(mapFile));
-    }
+    // We don't really care what the tagname is in here... weird, right?
+    Object.keys(files).forEach(function (key) {
+        if (key === '$' || key === '_') { return; }
 
-    if (files.folder)
-    {
-        [].push.apply(mappings, files.folder.map(mapFile));
-    }
+        [].push.apply(mappings, files[key].map(mapFile));
+    });
 
     return mappings;
 
@@ -459,15 +456,12 @@ function processMedia(media)
         src = (media && media.$ && media.$.destination) ? '/' + media.$.destination : '',
         dest = (media && media.$ && media.$.folder) ? '/' + media.$.folder : '';
 
-    if (media.filename)
-    {
-        [].push.apply(mappings, media.filename.map(mapFile));
-    }
+    // We don't really care what the tagname is in here... weird, right?
+    Object.keys(media).forEach(function (key) {
+        if (key === '$' || key === '_') { return; }
 
-    if (media.folder)
-    {
-        [].push.apply(mappings, media.folder.map(mapFile));
-    }
+        [].push.apply(mappings, media[key].map(mapFile));
+    });
 
     return mappings;
 
