@@ -70,7 +70,7 @@ The client application in which the extension is installed. Can be either `site`
 Type: `String`
 Default value: `null`
 
-The name of a directory that will be created (inside of `options.dest`) for this package. There's really no need to set this as the value will either be take from the `name` value in the manifest file or generated based on the type, group (plugins only), and name options.
+The name of a directory that will be created (inside of `options.dest`) for this package. There's really no need to set this as the value will either be taken from the `name` value in the manifest file or generated based on the type, group (plugins only), and name options.
 
 #### options.packagePrefix
 type: `Object`
